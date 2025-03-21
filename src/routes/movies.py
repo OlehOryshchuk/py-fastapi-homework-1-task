@@ -29,7 +29,6 @@ from routes.paginations import (
 
 router = APIRouter()
 
-
 @router.get("/movies/", response_model=MovieListResponseSchema)
 async def list_movies(
         q: Annotated[PaginationQuerySchema, Query()],
@@ -64,3 +63,4 @@ async def detail_movie(movie_id: int, db: Session = Depends(get_db)):
             detail="Movie with the given ID was not found."
         )
     return movie
+
