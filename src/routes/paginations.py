@@ -5,7 +5,7 @@ from sqlalchemy import (
     func
 )
 
-from src.schemas.paginations import (
+from schemas.paginations import (
     PaginationResponseSchema
 )
 

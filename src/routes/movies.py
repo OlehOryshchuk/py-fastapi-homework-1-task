@@ -13,15 +13,15 @@ from sqlalchemy import (
     select
 )
 
-from src.database import get_db, MovieModel
-from src.schemas.movies import (
+from database import get_db, MovieModel
+from schemas.movies import (
     MovieListResponseSchema,
     MovieDetailResponseSchema,
 )
-from src.schemas.paginations import (
+from schemas.paginations import (
     PaginationQuerySchema
 )
-from src.routes.paginations import (
+from routes.paginations import (
     get_paginated_response,
     get_paginate_query
 )

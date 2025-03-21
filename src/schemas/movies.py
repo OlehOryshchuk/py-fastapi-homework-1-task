@@ -8,7 +8,7 @@ from pydantic import (
     ConfigDict
 )
 
-from src.schemas.paginations import (
+from schemas.paginations import (
     PaginationResponseSchema
 )
 
