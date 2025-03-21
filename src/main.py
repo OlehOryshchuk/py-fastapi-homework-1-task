@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
-from routes import movie_router
+from src.routes import movie_router
+
 
 app = FastAPI(
     title="Movies homework",

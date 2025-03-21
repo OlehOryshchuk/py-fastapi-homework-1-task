@@ -1,36 +1,43 @@
-from datetime import datetime
-from decimal import Decimal
+from datetime import date
 
 from pydantic import (
     BaseModel,
     PositiveInt,
     Field,
-    NonNegativeInt,
-    AnyHttpUrl
+
+    ConfigDict
+)
+
+from src.schemas.paginations import (
+    PaginationResponseSchema
 )
 
 
-class MovieDetailResponseSchem(BaseModel):
+class MovieDetailResponseSchema(BaseModel):
     id: PositiveInt
     name: str
-    date: datetime.date
+    date: date
     score: float
     genre: str = Field(..., max_length=255)
     overview: str
     crew: str
     orig_title: str = Field(..., max_length=255)
     status: str = Field(..., max_length=50)
-    orig_lan: str = Field(..., max_length=50)
-    budget: Decimal = Field(
-        ..., ge=0, le=10**8 - 1, multiple_of=0.01
+    orig_lang: str = Field(..., max_length=50)
+    budget: float = Field(
+        ..., ge=0, le=10**10 - 1
     )
     revenue: float
-    country: Field(..., max_length=3)
+    country: str = Field(..., max_length=3)
+
+    model_config = ConfigDict(
+        from_attributes=True
+    )
 
 
-class MovieListResponseSchema(BaseModel):
-    movies: list[MovieDetailResponseSchem]
-    prev_page: AnyHttpUrl
-    next_page: AnyHttpUrl
-    total_pages: NonNegativeInt
-    total_items: NonNegativeInt
+class MovieListResponseSchema(PaginationResponseSchema):
+    movies: list[MovieDetailResponseSchema]
+
+    model_config = ConfigDict(
+        from_attributes=True
+    )
