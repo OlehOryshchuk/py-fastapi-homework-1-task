@@ -1,5 +1,5 @@
 from sqlalchemy.sql.selectable import Select
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import (
     select,
     func
@@ -16,9 +16,9 @@ def get_paginate_query(query: Select, page: int, per_page: int) -> Select:
     return query.offset(offset).limit(per_page)
 
 
-def get_paginated_response(
+async def get_paginated_response(
         query: Select,
-        db: Session,
+        db: AsyncSession,
         per_page: int,
         page: int,
         url_path: str
@@ -35,10 +35,10 @@ def get_paginated_response(
     :param db:
     :param per_page:
     :param page:
-    :param request:
+    :param url_path:
     :return:
     """
-    total_items = db.scalar(select(func.count()).select_from(query.subquery()))
+    total_items = await db.scalar(select(func.count()).select_from(query.subquery()))
     total_pages = total_items // per_page + (1 if total_items % per_page else 0)
 
     def get_page_url(page_num: int) -> str | None:
